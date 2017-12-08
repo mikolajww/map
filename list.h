@@ -69,7 +69,7 @@ template <typename T> list<T>::list(const list& l) {
     src = l.head;
     dst = &head;
     while (src) {
-        *dst = new node;
+        *dst = new node();
 		delete ((*dst)->val);
         (*dst)->val = new T(*src->val);
         (*dst)->next = NULL;
@@ -91,7 +91,7 @@ template <typename T> list<T>& list<T>::operator=(const list& l) {
     dst = &head;
     while (src) {
         if(*dst == NULL) {
-            *dst = new node;
+            *dst = new node();
             (*dst)->next = NULL;
         }
 		delete ((*dst)->val);
