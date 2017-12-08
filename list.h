@@ -1,4 +1,8 @@
+#ifndef B
+#define B
 #include <iostream>
+#include "Map.h"
+
 using namespace std;
 
 template <typename T> class list {
@@ -10,15 +14,15 @@ private:
     node* head;
     node* current;
 public:
-    list();
-    list(const list& l);
+    list ();
+    list (const list& l);
     list& operator=(const list& l);
-    ~list();
-    void insert(T* a);
-    void goToHead();
-    T* getCurrentData();
-    void advance();
-    bool moreData();
+    ~list ();
+    void insert (T* a);
+    void goToHead ();
+    T* getCurrentData ();
+    void advance ();
+    bool moreData ();
 };
 
 template <typename T> list<T>::list () {
@@ -59,15 +63,16 @@ template <typename T> bool list<T>::moreData () {
 }
 
 template <typename T> list<T>::list(const list& l) {
-    current = nullptr;
+    current = NULL;
     node *src, **dst;
-    head = nullptr;
+    head = NULL;
     src = l.head;
     dst = &head;
     while (src) {
         *dst = new node;
-        (*dst)->val = src->val;
-        (*dst)->next = nullptr;
+		delete ((*dst)->val);
+        (*dst)->val = new T(*src->val);
+        (*dst)->next = NULL;
         if(src == l.current) {
             current=*dst;
         }
@@ -80,17 +85,17 @@ template <typename T> list<T>& list<T>::operator=(const list& l) {
     if (&l == this) {
         return *this;
     }
-
-    current = nullptr;
+    current = NULL;
     node *src, **dst;
     src = l.head;
     dst = &head;
     while (src) {
-        if(*dst == nullptr) {
+        if(*dst == NULL) {
             *dst = new node;
-            (*dst)->next = nullptr;
+            (*dst)->next = NULL;
         }
-        (*dst)->val = src->val;
+		delete ((*dst)->val);
+        (*dst)->val = new T(*src->val);
         if(src == l.current) {
             current=*dst;
         }
@@ -105,3 +110,4 @@ template <typename T> list<T>& list<T>::operator=(const list& l) {
     }
     return *this;
 }
+#endif
